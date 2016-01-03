@@ -1,11 +1,16 @@
+## Overview
+ 
+ This is a sample project to test build of nginx container using chef cookbook
+ 
 ## Reference
 http://ringo.de-smet.name/2015/03/keep-chef-out-of-your-docker-containers/
 
+## Execution steps
 1 Build image
 ```bash
  docker-compose up
 ```
-2 Validate 
+2 Reset entrypoint to start nginx 
 ```bash
 docker commit -c "ENTRYPOINT service nginx restart && service ssh restart && bash"  d58bfa6d6fcb  maxv/nginx23
 ```
@@ -21,11 +26,11 @@ www-data    32    29  0 04:11 ?        00:00:00 nginx: worker process
 root        70    59  0 04:11 ?        00:00:00 grep --color=auto nginx
 
 ```
-1 Exit
+1 Exit 
 
 # Run Example 
 ```bash
-Maxs-MacBook-Pro:chef-provisioner darkstar$ docker-compose up
+$ docker-compose up
 Creating chefprovisioner_chef_1
 Building chefdata
 Step 1 : FROM tianon/true
@@ -379,7 +384,7 @@ nginx_1    | [2016-01-03T04:42:46+00:00] INFO: Running report handlers
 nginx_1    | [2016-01-03T04:42:46+00:00] INFO: Report handlers complete
 chefprovisioner_nginx_1 exited with code 0
 Gracefully stopping... (press Ctrl+C again to force)
-Maxs-MacBook-Pro:chef-provisioner darkstar$ docker ps -a
+$ docker ps -a
 CONTAINER ID        IMAGE                               COMMAND                  CREATED             STATUS                        PORTS               NAMES
 35208a788ecb        chefprovisioner_nginx               "/opt/chef/bin/chef-c"   53 seconds ago      Exited (0) 18 seconds ago                         chefprovisioner_nginx_1
 6d15bb8c6cc8        chefprovisioner_chefdata            "/true"                  54 seconds ago      Exited (0) 53 seconds ago                         chefprovisioner_chefdata_1
