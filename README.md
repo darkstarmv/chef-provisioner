@@ -443,8 +443,6 @@ $ docker-machine ssh default
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 Boot2Docker version 1.9.0, build master : 16e4a2a - Tue Nov  3 19:49:22 UTC 2015
 Docker version 1.9.0, build 76d6bc9
-docker@default:~$ docker inspect 2a47e981b744 |grep IPA
-Error: No such image or container: 2a47e981b744
 docker@default:~$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                       NAMES
 c059bbe497e0        maxv/nginx234       "/bin/sh -c 'service "   About a minute ago   Up About a minute   22/tcp, 443/tcp, 8080/tcp   happy_hawking
