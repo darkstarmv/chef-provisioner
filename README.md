@@ -469,6 +469,12 @@ docker@default:~$ curl 172.17.0.2:8080
 docker@default:~$ 
 
   ```
+  ## if you want to connect to your nginx instance from browser on your laptop you need to forward port
+  
+  ```bash
+  iptables -t nat -A  DOCKER -p tcp --dport 8080 -j DNAT --to-destination 172.17.0.2:8080
+  ```
+  
   
   # Clean up
   To remove images/containers execute below commands. you need to run these commands every time you want to rebuild container.
