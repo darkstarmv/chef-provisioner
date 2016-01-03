@@ -6,6 +6,14 @@
 http://ringo.de-smet.name/2015/03/keep-chef-out-of-your-docker-containers/
 
 ## Execution steps
+
+### Chef cookbook setup
+
+```bash
+berks install
+berks vendor chef/cookbooks
+```
+
 ###Build image
 
   ```bash
@@ -460,4 +468,11 @@ docker@default:~$ curl 172.17.0.2:8080
 </html>
 docker@default:~$ 
 
+  ```
+  
+  # Clean up
+  To remove images/containers execute below commands. you need to run these commands every time you want to rebuild container.
+  ```bash
+  docker-compose rm
+  docker images | grep chefprovisioner  |  awk  ' { print $3 } ' | xargs docker rmi -f
   ```
