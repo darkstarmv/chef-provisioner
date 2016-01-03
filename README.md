@@ -6,11 +6,14 @@
 http://ringo.de-smet.name/2015/03/keep-chef-out-of-your-docker-containers/
 
 ## Execution steps
-1. Build image
+###Build image
+
   ```bash
  docker-compose up
   ```
-2. Findout container ID:
+  
+###Findout container ID:
+
   ```bash
 $ docker ps -a
 CONTAINER ID        IMAGE                               COMMAND                  CREATED             STATUS                        PORTS               NAMES
@@ -21,11 +24,14 @@ af569dd2c0b6        releasequeue/chef-client:12.0.3-1   "/bin/true"             
 a2f58f82abaa        df0c80b315db                        "/bin/sh -c 'apt-get "   54 minutes ago      Exited (137) 53 minutes ago                       evil_darwin
 ee7406123b69        df0c80b315db                        "/bin/sh -c 'apt-get "   56 minutes ago      Exited (2) 56 minutes ago                         cocky_einstein
 ```
-3. Reset entrypoint to start nginx 
+###Reset entrypoint to start nginx 
+
    ```bash
    docker commit -c "ENTRYPOINT service nginx restart && service ssh restart && bash"  35208a788ecb  maxv/nginx23
    ```
-4. Run new container
+
+###Run new container
+
   ```bash
 $ docker run -i -t maxv/nginx23
  * Restarting nginx nginx                                                                                                         [ OK ] 
@@ -37,9 +43,9 @@ www-data    32    29  0 04:11 ?        00:00:00 nginx: worker process
 root        70    59  0 04:11 ?        00:00:00 grep --color=auto nginx
 
 ```
-5. Exit 
 
 # Complete execution example 
+
 ```bash
 $ docker-compose up
 Creating chefprovisioner_chef_1
@@ -417,7 +423,9 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 root@c059bbe497e0:/etc/nginx# 
 
   ```
+  
 - Connect to the docker-machine and Validate container:
+  
   ```bash
 $ docker-machine ssh default
                         ##         .
