@@ -6,16 +6,27 @@
 http://ringo.de-smet.name/2015/03/keep-chef-out-of-your-docker-containers/
 
 ## Execution steps
-1 Build image
-```bash
+1. Build image
+  ```bash
  docker-compose up
+  ```
+2. Findout container ID:
+  ```bash
+$ docker ps -a
+CONTAINER ID        IMAGE                               COMMAND                  CREATED             STATUS                        PORTS               NAMES
+35208a788ecb        chefprovisioner_nginx               "/opt/chef/bin/chef-c"   53 seconds ago      Exited (0) 18 seconds ago                         chefprovisioner_nginx_1
+6d15bb8c6cc8        chefprovisioner_chefdata            "/true"                  54 seconds ago      Exited (0) 53 seconds ago                         chefprovisioner_chefdata_1
+af569dd2c0b6        releasequeue/chef-client:12.0.3-1   "/bin/true"              56 seconds ago      Exited (0) 54 seconds ago                         chefprovisioner_chef_1
+3a26ec8eae8d        d7bb547274d6                        "/bin/sh -c 'apt-get "   49 minutes ago      Exited (100) 48 minutes ago                       lonely_hawking
+a2f58f82abaa        df0c80b315db                        "/bin/sh -c 'apt-get "   54 minutes ago      Exited (137) 53 minutes ago                       evil_darwin
+ee7406123b69        df0c80b315db                        "/bin/sh -c 'apt-get "   56 minutes ago      Exited (2) 56 minutes ago                         cocky_einstein
 ```
-2 Reset entrypoint to start nginx 
-```bash
-docker commit -c "ENTRYPOINT service nginx restart && service ssh restart && bash"  d58bfa6d6fcb  maxv/nginx23
-```
-3 Run new container
-```bash
+3. Reset entrypoint to start nginx 
+   ```bash
+   docker commit -c "ENTRYPOINT service nginx restart && service ssh restart && bash"  35208a788ecb  maxv/nginx23
+   ```
+4. Run new container
+  ```bash
 $ docker run -i -t maxv/nginx23
  * Restarting nginx nginx                                                                                                         [ OK ] 
  * Restarting OpenBSD Secure Shell server sshd                                                                                    [ OK ] 
@@ -26,9 +37,9 @@ www-data    32    29  0 04:11 ?        00:00:00 nginx: worker process
 root        70    59  0 04:11 ?        00:00:00 grep --color=auto nginx
 
 ```
-1 Exit 
+5. Exit 
 
-# Run Example 
+# Complete execution example 
 ```bash
 $ docker-compose up
 Creating chefprovisioner_chef_1
@@ -392,9 +403,9 @@ af569dd2c0b6        releasequeue/chef-client:12.0.3-1   "/bin/true"             
 3a26ec8eae8d        d7bb547274d6                        "/bin/sh -c 'apt-get "   49 minutes ago      Exited (100) 48 minutes ago                       lonely_hawking
 a2f58f82abaa        df0c80b315db                        "/bin/sh -c 'apt-get "   54 minutes ago      Exited (137) 53 minutes ago                       evil_darwin
 ee7406123b69        df0c80b315db                        "/bin/sh -c 'apt-get "   56 minutes ago      Exited (2) 56 minutes ago                         cocky_einstein
-Maxs-MacBook-Pro:chef-provisioner darkstar$ docker commit -c "ENTRYPOINT service nginx restart && service ssh restart && bash" 35208a788ecb    maxv/nginx234
+$ docker commit -c "ENTRYPOINT service nginx restart && service ssh restart && bash" 35208a788ecb    maxv/nginx234
 0ee0081b63e4786549a270be25ddee947e41c121130438b51906a6ef80288837
-Maxs-MacBook-Pro:chef-provisioner darkstar$ docker run -i -t maxv/nginx234
+$ docker run -i -t maxv/nginx234
  * Restarting nginx nginx                                                                                                         [ OK ] 
  * Restarting OpenBSD Secure Shell server sshd                                                                                    [ OK ] 
 root@c059bbe497e0:/etc/nginx# netstat -antp           
@@ -405,9 +416,9 @@ tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      
 tcp6       0      0 :::22                   :::*                    LISTEN      59/sshd         
 root@c059bbe497e0:/etc/nginx# 
 
-```
-Connect to the docker-machine and Validate container:
-```bash
+  ```
+- Connect to the docker-machine and Validate container:
+  ```bash
 $ docker-machine ssh default
                         ##         .
                   ## ## ##        ==
@@ -443,4 +454,4 @@ docker@default:~$ curl 172.17.0.2:8080
 </html>
 docker@default:~$ 
 
-```
+  ```
